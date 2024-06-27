@@ -68,3 +68,16 @@ nav h1 {
 .button.turqoise {
   background-color: var(--accent-turqoise);
 }
+
+a.bi {
+  align-self: start;
+}
+
+.bi {
+  font-size: 2rem;
+  transition: ease-in 0.2s;
+}
+
+.bi-arrow-left:hover {
+  transform: translateX(10px);
+}
