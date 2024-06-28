@@ -10,10 +10,10 @@
         <?php
             include "assets/css/colors.css";
             include "assets/css/global.css";
-            include "assets/css/contact-us.css";
+            include "assets/css/faq.css";
         ?>
     </style>
-    <title>PhilPort | Contact Us</title>
+    <title>PhilPort | FAQ's</title>
 </head>
 <body>
     <nav>
@@ -26,5 +26,7 @@
             <li><a class="button" href="/passport_appointment_management/login">Login / Sign Up</a></li>
         </ul>
     </nav>
+    
+    <main></main>
 </body>
 </html>

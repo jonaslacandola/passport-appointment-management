@@ -1,0 +1,58 @@
+#calendar {
+  height: 60vh;
+}
+
+.fc-daygrid table {
+  border: none !important;
+}
+
+.fc .fc-daygrid-day {
+  /* Change border color */
+  border: 1px solid var(--secondary-soft-gray);
+
+  font-family: "Roboto";
+  font-size: 14px;
+
+  transition: ease-in 0.2s;
+}
+
+.fc .fc-daygrid-day:hover {
+  background-color: var(--secondary-soft-gray);
+}
+
+.fc .fc-day-today {
+  background-color: var(--primary-light-blue) !important;
+  color: var(--secondary-white);
+}
+
+/* Change button colors */
+.fc .fc-button {
+  background-color: var(--primary-medium-blue);
+  color: white;
+  border: none;
+
+  font-family: "Roboto";
+  font-size: 1rem;
+
+  transition: ease-in 0.2s;
+}
+
+.fc .fc-button:hover {
+  background-color: var(--accent-coral);
+}
+
+/* Customize header */
+.fc .fc-toolbar-title {
+  color: var(--secondary-dark-gray); /* Change title text color */
+
+  font-size: 18px;
+  font-family: "Roboto";
+}
+
+.fc .fc-col-header-cell {
+  font-family: "Roboto";
+  font-size: 1rem;
+
+  padding: 8px;
+  border: 1px solid var(--secondary-soft-gray);
+}

@@ -22,7 +22,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ</a></li>
+            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <li><a class="button" href="/passport_appointment_management/login">Login / Sign Up</a></li>
         </ul>
@@ -33,7 +33,7 @@
             <form id="appointment-form" method="post">
                 <div>
                     <p class="title">Appointment Info</p>
-                    <input class="input" type="text" name="dateAndTime" id="dateAndTime" placeholder="Date & Time">
+                    <input class="input" type="text" name="dateAndTime" id="dateAndTime" placeholder="Date & Time" disabled>
                     <input class="input" type="text" name="place" id="place" placeholder="Place">
                     <input class="input" type="text" name="passportType" id="passportType" placeholder="Reason for Appointment">
                 </div>
@@ -45,8 +45,8 @@
                 </div>
                 <div>
                     <p class="title">Contact Info</p>
-                    <input class="input" type="text" name="name" id="name" placeholder="Name">
-                    <input class="input" type="text" name="dateOfBirth" id="dateOfBirth" placeholder="Date of Birth">
+                    <input class="input" type="text" name="email" id="email" placeholder="Email">
+                    <input class="input" type="text" name="contact" id="contact" placeholder="Contact Number">
                 </div>
             </form>
             <div id="calendar"></div>

@@ -6,6 +6,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/svg" href="assets/images/philport_icon.svg"/>
     <style>
         <?php
             include "assets/css/homepage.css";
@@ -21,7 +22,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ</a></li>
+            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <li><a class="button" href="/passport_appointment_management/login">Login / Sign Up</a></li>
         </ul>
@@ -63,7 +64,7 @@
             <section>
                 <span>Privacy Policy | Terms of Service | Social Media Links</span>
 
-                <span>&copy; Passport Appointment Management 2024. All rights reserved.</span>
+                <span>&copy; PhilPort Passport Appointment Management 2024. All rights reserved.</span>
             </section>
         </footer>
     </main>
