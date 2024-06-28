@@ -13,11 +13,11 @@
             include "assets/css/contact-us.css";
         ?>
     </style>
-    <title>PassFort | Contact Us</title>
+    <title>PhilPort | Contact Us</title>
 </head>
 <body>
     <nav>
-        <h1>PassFort</h1>
+        <img src="assets/images/philport_logo.svg" alt="">
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
@@ -26,7 +26,5 @@
             <li><a class="button" href="/passport_appointment_management/login">Login / Sign Up</a></li>
         </ul>
     </nav>
-    
-    <main></main>
 </body>
 </html>

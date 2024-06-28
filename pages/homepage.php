@@ -13,11 +13,11 @@
             include "assets/css/colors.css";
         ?>
     </style>
-    <title>PassFort | Passport appointments fast and easy</title>
+    <title>PhilPort | Passport Appointments made Fast and Easy</title>
 </head>
 <body>
     <nav>
-        <h1>PassFort</h1>
+        <img src="assets/images/philport_logo.svg" alt="Philport Logo">
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>

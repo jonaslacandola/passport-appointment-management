@@ -1,6 +1,11 @@
 body {
   height: 100vh;
   width: 100%;
+  color: var(--secondary-white);
+}
+
+a {
+  color: var(--secondary-white);
 }
 
 main {
@@ -48,6 +53,7 @@ main {
 
 .input {
   font-size: 1rem;
+  color: var(--secondary-white);
   outline: 2px solid transparent;
   padding: 0.8rem 1rem;
 

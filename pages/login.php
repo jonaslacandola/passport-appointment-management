@@ -14,13 +14,13 @@
             include "assets/css/login.css";
         ?>
     </style>
-    <title>PassFort | Login</title>
+    <title>PhilPort | Login</title>
 </head>
 <body>
     <main>
         <section id="left-side">
             <div id="login-form" class="container">
-                <h1>Welcome Back to PassFort!</h1>
+                <h1>Welcome Back to PhilPort!</h1>
                 <p>Log in to manage your passport appointments and keep track of your application status.</p>
                 <form method="post">
                     <input class="input" type="email" name="login-email" id="login-email" placeholder="Email">
@@ -29,8 +29,8 @@
                 </form>
             </div>
             <div id="register-form" class="container-hidden">
-                <h1>Get Started with PassFort</h1>
-                <p>Fill in the details below to create your PassFort account and start managing your passport appointments with ease.</p>
+                <h1>Get Started with PhilPort</h1>
+                <p>Fill in the details below to create your PhilPort account and start managing your passport appointments with ease.</p>
                 <form method="post">
                     <input class="input" type="text" name="register-username" id="register-username" placeholder="Username">
                     <input class="input" type="email" name="register-email" id="register-email" placeholder="Email">

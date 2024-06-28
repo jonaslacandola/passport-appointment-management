@@ -4,7 +4,6 @@
   border-box: box-sizing;
   font-family: "Roboto";
   font-weight: 400;
-  color: var(--secondary-white);
 }
 
 body {
@@ -45,8 +44,12 @@ nav ul {
   gap: 2.5rem;
 }
 
-nav h1 {
-  font-size: 2rem;
+ul li a {
+  color: var(--secondary-white);
+}
+
+nav img {
+  height: 4.5rem;
 }
 
 .button {
