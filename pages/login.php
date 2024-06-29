@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
+    <link rel="icon" type="image/svg" href="assets/images/philport_icon.svg"/>
     <style>
         <?php
             include "assets/css/colors.css";
@@ -32,7 +33,7 @@
                 <h1>Get Started with PhilPort</h1>
                 <p>Fill in the details below to create your PhilPort account and start managing your passport appointments with ease.</p>
                 <form method="post">
-                    <input class="input" type="text" name="register-username" id="register-username" placeholder="Username">
+                    <input class="input" type="text" name="register-name" id="register-name" placeholder="Name">
                     <input class="input" type="email" name="register-email" id="register-email" placeholder="Email">
                     <input class="input" type="text" name="register-contact" id="register-contact" placeholder="Contact Number">
                     <input class="input" type="password" name="register-password" id="register-password" placeholder="Password">

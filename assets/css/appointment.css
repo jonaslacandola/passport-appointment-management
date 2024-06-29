@@ -76,4 +76,30 @@ form div {
 
 .input:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
+}
+
+select {
+  color: var(--secondary-light-gray) !important;
+}
+
+#summary {
+  display: grid;
+  grid-template-rows: 1fr 5rem;
+}
+
+#submit {
+  align-self: end;
+  justify-self: end;
+}
+
+#summary main {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+#summary div {
+  display: flex;
+  gap: 2rem;
 }

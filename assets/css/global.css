@@ -52,7 +52,17 @@ nav img {
   height: 4.5rem;
 }
 
+/* nav ul li a {
+  border-bottom: 0px solid var(--secondary-white);
+  transition: ease-in 0.3s;
+}
+
+nav ul li a:hover {
+  border-bottom: 1px solid var(--secondary-white);
+} */
+
 .button {
+  font-size: 1rem;
   padding: 1rem 1.5rem;
   border: none;
   border-radius: 0.5rem;
