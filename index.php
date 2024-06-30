@@ -20,9 +20,6 @@
         case "sign-up":
             include "pages/signup.php";
             break;
-        case "dashboard":
-            include "pages/dashboard.php";
-            break;
         case "profile":
             include "pages/profile.php";
             break;

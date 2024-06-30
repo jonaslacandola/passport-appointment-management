@@ -1,3 +1,80 @@
+<?php
+    session_start();
+    include "config.php";
+
+    if (count($_SESSION)) {
+        header("Location: appointment");
+        exit();
+    }
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        if ($_POST["request"] === "login") {
+            $email = $conn->real_escape_string(trim($_POST["login-email"]));
+            $password = $conn->real_escape_string(trim($_POST["login-password"]));
+
+            if (!empty($email) && !empty($password)) {
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = ?");
+                $statement->bind_param("s", $email);
+                $statement->execute();
+                $statement->store_result();
+
+                if ($statement->num_rows() === 1) {
+                    $statement->bind_result($uid, $db_name, $db_email, $db_password, $db_contact);
+                    $statement->fetch();
+
+                    if(password_verify($password, $db_password)) {
+                        $_SESSION["uid"] = $uid;
+                        $_SESSION["name"] = $db_name;
+                        header("Location: appointment");
+                        exit();
+                    } else {
+                        //Wrong password
+                    }
+                } else {
+                    //No user found;
+                }
+            } else {
+                // echo "Empty fields";
+            }
+        } elseif ($_POST["request"] === "register") {
+            $name = $conn->real_escape_string(trim($_POST["register-name"]));
+            $password = $conn->real_escape_string(trim($_POST["register-password"]));
+            $email = $conn->real_escape_string(trim($_POST["register-email"]));
+            $contact = $conn->real_escape_string(trim($_POST["register-contact"]));
+
+            if (!empty($name) && !empty($password) && !empty($email) && !empty($contact)) {
+                $statement = $conn->prepare("SELECT * FROM users WHERE email = ? OR name = ?");
+                $statement->bind_param("ss", $email, $name);
+                $statement->execute();
+                $statement->store_result();
+
+                if ($statement->num_rows() === 0){
+
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    $statement = $conn->prepare("INSERT INTO users (name, password, email, contact) VALUES (?, ?, ?, ?)");
+                    $statement->bind_param("ssss", $name, $hashedPassword, $email, $contact);
+                    
+                    if ($statement->execute()) {
+                        $_SESSION["uid"] = $statement->insert_id;
+                        $_SESSION["name"] = $name;
+                        header("Location: appointment");
+                        exit();
+                    } else {
+                        //failed to register.
+                    }   
+                } else {
+                    //email already exists.
+                }
+            } else {
+                //answer all fields
+            }
+        }
+
+        $statement->close();
+    }
+    $conn->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,6 +101,7 @@
                 <h1>Welcome Back to PhilPort!</h1>
                 <p>Log in to manage your passport appointments and keep track of your application status.</p>
                 <form method="post">
+                    <input type="hidden" name="request" value="login">
                     <input class="input" type="email" name="login-email" id="login-email" placeholder="Email">
                     <input class="input" type="password" name="login-password" id="login-password" placeholder="Password">
                     <input class="button" type="submit" value="Log In">
@@ -33,6 +111,7 @@
                 <h1>Get Started with PhilPort</h1>
                 <p>Fill in the details below to create your PhilPort account and start managing your passport appointments with ease.</p>
                 <form method="post">
+                    <input type="hidden" name="request" value="register">
                     <input class="input" type="text" name="register-name" id="register-name" placeholder="Name">
                     <input class="input" type="email" name="register-email" id="register-email" placeholder="Email">
                     <input class="input" type="text" name="register-contact" id="register-contact" placeholder="Contact Number">

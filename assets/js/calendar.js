@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     initialView: "dayGridMonth",
     dateClick: (info) => {
       const dateAndTime = document.querySelector("#dateAndTime");
-      const timeAndPlace = document.querySelector("#sum-timeAndplace");
+      const timeAndPlace = document.querySelector("#sum-time");
       const date = new Date(info.dateStr);
 
       if (date <= new Date()) {
