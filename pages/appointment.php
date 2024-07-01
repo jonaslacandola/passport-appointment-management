@@ -9,6 +9,27 @@
     $statement->store_result();
     $statement->bind_result($uid, $name, $email, $password, $contact);
     $statement->fetch();
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+        $ap_name = $conn->real_escape_string(trim($_POST["name"]));
+        $ap_gender = isset($_POST["gender"]) ? $_POST["gender"] : "";
+        $ap_birthdate = isset($_POST["dateOfBirth"]) ? $_POST["dateOfBirth"] : "";
+        $ap_contact = $conn->real_escape_string(trim($_POST["contact"]));
+        $ap_email = $conn->real_escape_string(trim($_POST["email"]));
+        $ap_dateAndTime = $_POST["dateAndTime"];
+        $ap_location = isset($_POST["location"]) ? $_POST["location"] : "";
+        $ap_reason = isset($_POST["reason"]) ? $_POST["reason"] : "";
+
+        if (!empty($ap_name) && !empty($ap_gender) && !empty($ap_birthdate) && !empty($ap_contact) && !empty($ap_email) && !empty($ap_dateAndTime) && !empty($ap_location) && !empty($ap_reason)) {
+            $statement = $conn->prepare("INSERT INTO appointments (name, birthdate, gender, email, contact, date, reason, location, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
+            $statement->bind_param("ssssssssi", $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $_SESSION["uid"]);
+            $statement->execute();
+            $statement->close();
+        } else {
+            //Fill out all fields
+        }
+        $conn->close();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -54,7 +75,7 @@
             <form id="appointment-form" method="post">
                 <div>
                     <p class="title">Appointment Info</p>
-                    <input class="input" type="text" name="dateAndTime" id="dateAndTime" placeholder="Date & Time" disabled>
+                    <input class="input" type="text" name="dateAndTime" id="dateAndTime" placeholder="Date & Time">
                     <select class="input" name="location" id="location" default="">
                         <option value="" disabled selected hidden>Location</option>
                         <option value="Angeles, Pampanga">Angeles, Pampanga</option>
