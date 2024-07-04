@@ -2,6 +2,26 @@
     session_start();
 
     include "config.php";
+
+    if (!isset($_SESSION["uid"])) {
+        header("Location: /passport_appointment_management/");
+        exit();
+    }
+
+    $statement = $conn->prepare("SELECT uid, name, email, contact FROM users WHERE uid = ? OR name = ?");
+    $statement->bind_param("ss", $_SESSION["uid"], $_SESSION["name"]);
+    $statement->execute();
+    $statement->store_result();
+    $statement->bind_result($db_uid, $db_name, $db_email, $db_contact);
+    $statement->fetch();
+    $statement->close();
+
+    $statement = $conn->prepare("SELECT * FROM appointments WHERE uid = ? ");
+    $statement->bind_param("s", $_SESSION["uid"]);
+    $statement->execute();
+    $results = $statement->get_result();
+    $appointments = $results->fetch_all(MYSQLI_ASSOC);
+    $statement->close();
 ?>
 
 <!DOCTYPE html>
@@ -32,7 +52,7 @@
             <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
-                if (!count($_SESSION)) {
+                if (!isset($_SESSION["uid"])) {
                  echo "<li><a class=\"button\" href=\"/passport_appointment_management/login\">Login / Sign Up</a></li>";
                 } else {
                     echo "<li><a class=\"bi bi-person-fill\" href=\"/passport_appointment_management/profile\"></a></li>";
@@ -41,6 +61,18 @@
         </ul>
     </nav>
 
-    <main></main>
+    <main>
+        <div id="info-container">
+            <div id="info">
+                <h1><?= htmlspecialchars($db_name) ?></h1>
+                <p><?= htmlspecialchars($db_email) ?></p>
+                <p><?= htmlspecialchars($db_contact)?></p>
+            </div>
+            <a href="logout.php">Log Out</a>
+        </div>
+        <div>
+            <h2>Dashboard</h2>
+        </div>
+    </main>
 </body>
 </html>

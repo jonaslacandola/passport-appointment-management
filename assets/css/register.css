@@ -87,7 +87,7 @@ form input[type="submit"]:hover {
   align-items: center;
 
   background-image: linear-gradient(
-    to left,
+    to right,
     rgba(0, 51, 102, 0),
     rgba(0, 51, 102, 1.5)
   );

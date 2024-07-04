@@ -1,76 +1,55 @@
 <?php
     session_start();
+
     include "config.php";
 
-    if (count($_SESSION)) {
+    if (isset($_SESSION["uid"])) {
         header("Location: appointment");
         exit();
     }
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        if ($_POST["request"] === "login") {
-            $email = $conn->real_escape_string(trim($_POST["login-email"]));
-            $password = $conn->real_escape_string(trim($_POST["login-password"]));
+        $errors = [];
 
-            if (!empty($email) && !empty($password)) {
-                $statement = $conn->prepare("SELECT * FROM users WHERE email = ?");
-                $statement->bind_param("s", $email);
-                $statement->execute();
-                $statement->store_result();
+        $email = filter_var(trim($_POST["login-email"]), FILTER_VALIDATE_EMAIL);
+        $password = trim($_POST["login-password"]);
 
-                if ($statement->num_rows() === 1) {
-                    $statement->bind_result($uid, $db_name, $db_email, $db_password, $db_contact);
-                    $statement->fetch();
+        if (!empty($email) && !empty($password)) {
+            $statement = $conn->prepare("SELECT * FROM users WHERE email = ?");
+            $statement->bind_param("s", $email);
+            $statement->execute();
+            $statement->store_result();
 
-                    if(password_verify($password, $db_password)) {
-                        $_SESSION["uid"] = $uid;
-                        $_SESSION["name"] = $db_name;
-                        header("Location: appointment");
-                        exit();
-                    } else {
-                        //Wrong password
-                    }
+            if ($statement->num_rows() === 1) {
+                $statement->bind_result($uid, $db_name, $db_email, $db_password, $db_contact);
+                $statement->fetch();
+
+                if(password_verify($password, $db_password)) {
+                    $_SESSION["uid"] = $uid;
+                    $_SESSION["name"] = $db_name;
+                    header("Location: appointment");
+                    $statement->close();
+                    unset($_SESSION["login-errors"]);
+
+                    exit();
                 } else {
-                    //No user found;
+                    array_push($errors, "Password is incorrect");
+                    $_SESSION["login-errors"] = $errors;
+                    header("Location: login");
+                    exit();
                 }
             } else {
-                // echo "Empty fields";
+                array_push($errors, "Account does not exist");
+                $_SESSION["login-errors"] = $errors;
+                header("Location: login");
+                exit();
             }
-        } elseif ($_POST["request"] === "register") {
-            $name = $conn->real_escape_string(trim($_POST["register-name"]));
-            $password = $conn->real_escape_string(trim($_POST["register-password"]));
-            $email = $conn->real_escape_string(trim($_POST["register-email"]));
-            $contact = $conn->real_escape_string(trim($_POST["register-contact"]));
-
-            if (!empty($name) && !empty($password) && !empty($email) && !empty($contact)) {
-                $statement = $conn->prepare("SELECT * FROM users WHERE email = ? OR name = ?");
-                $statement->bind_param("ss", $email, $name);
-                $statement->execute();
-                $statement->store_result();
-
-                if ($statement->num_rows() === 0){
-
-                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-                    $statement = $conn->prepare("INSERT INTO users (name, password, email, contact) VALUES (?, ?, ?, ?)");
-                    $statement->bind_param("ssss", $name, $hashedPassword, $email, $contact);
-                    
-                    if ($statement->execute()) {
-                        $_SESSION["uid"] = $statement->insert_id;
-                        $_SESSION["name"] = $name;
-                        header("Location: appointment");
-                        exit();
-                    } else {
-                        //failed to register.
-                    }   
-                } else {
-                    //email already exists.
-                }
-            } else {
-                //answer all fields
-            }
+        } else {
+            array_push($errors, "Please answer all fields");
+            $_SESSION["login-errors"] = $errors;
+            header("Location: login");
+            exit();
         }
-
-        $statement->close();
     }
     $conn->close();
 ?>
@@ -106,40 +85,24 @@
                     <input class="input" type="password" name="login-password" id="login-password" placeholder="Password">
                     <input class="button" type="submit" value="Log In">
                 </form>
-            </div>
-            <div id="register-form" class="container-hidden">
-                <h1>Get Started with PhilPort</h1>
-                <p>Fill in the details below to create your PhilPort account and start managing your passport appointments with ease.</p>
-                <form method="post">
-                    <input type="hidden" name="request" value="register">
-                    <input class="input" type="text" name="register-name" id="register-name" placeholder="Name">
-                    <input class="input" type="email" name="register-email" id="register-email" placeholder="Email">
-                    <input class="input" type="text" name="register-contact" id="register-contact" placeholder="Contact Number">
-                    <input class="input" type="password" name="register-password" id="register-password" placeholder="Password">
-                    <input class="button" type="submit" value="Sign Up">
-                </form>
+                <?php
+                    if (isset($_SESSION["login-errors"])) {
+                        foreach ($_SESSION["login-errors"] as $error) {
+                            echo "<p class=\"error-log\">{$error}</p>";
+                        }
+                    }
+                ?>
             </div>
         </section>
         <section id="right-side">
             <img id="bg-image" src="assets/images/image2.jpg" alt="Image of a drone shot of windmills">
-            <div id="text-container">
-                <div id="login-text" class="hide">
-                    <a href="/passport_appointment_management/" class="bi bi-arrow-left"></a>
-                    <h1>Ready to Plan Your Next Trip?</h1>
-                    <p>Sign in to quickly book your passport appointments and ensure your travel plans are seamless.</p> 
-                    <button id="login-btn" class="button">Log In Account</button>
-                </div>
-                
-                <div id="register-text" class="show">
-                    <a href="/passport_appointment_management/" class="bi bi-arrow-left"></a>
-                    <h1>Sign Up for an Effortless Experience</h1>
-                    <p>Register now to gain access to our hassle-free appointment scheduling system and keep your travel plans on track.</p>
-                    <button id="register-btn" class="button">Register Now</button>
-                </div>
+            <div id="text-container">              
+                <a href="/passport_appointment_management/" class="bi bi-arrow-left"></a>
+                <h1>Sign Up for an Effortless Experience</h1>
+                <p>Register now to gain access to our hassle-free appointment scheduling system and keep your travel plans on track.</p>
+                <a id="register-btn" class="button" href="/passport_appointment_management/register">Register Now</a>
             </div>
         </section>
     </main>
-
-    <script src="assets/js/login.js"></script>
 </body>
 </html>

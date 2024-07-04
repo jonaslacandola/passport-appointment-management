@@ -1,5 +1,6 @@
 <?php
     session_start();
+    // session_unset();
 ?>
 
 <!DOCTYPE html>
@@ -30,7 +31,7 @@
             <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
-                if (!count($_SESSION)) {
+                if (!isset($_SESSION["uid"])) {
                  echo "<li><a class=\"button\" href=\"/passport_appointment_management/login\">Login / Sign Up</a></li>";
                 } else {
                     echo "<li><a class=\"bi bi-person-fill\" href=\"/passport_appointment_management/profile\"></a></li>";

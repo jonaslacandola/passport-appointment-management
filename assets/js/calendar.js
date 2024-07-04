@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      dateAndTime.value = formatDate(new Date(info.dateStr));
+      dateAndTime.value = info.dateStr;
       timeAndPlace.innerText = formatDate(new Date(info.dateStr));
     },
   });

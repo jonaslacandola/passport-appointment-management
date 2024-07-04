@@ -9,20 +9,22 @@
     $statement->store_result();
     $statement->bind_result($uid, $name, $email, $password, $contact);
     $statement->fetch();
+    $statement->close();
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-        $ap_name = $conn->real_escape_string(trim($_POST["name"]));
+        $ap_name = trim($_POST["name"]);
         $ap_gender = isset($_POST["gender"]) ? $_POST["gender"] : "";
         $ap_birthdate = isset($_POST["dateOfBirth"]) ? $_POST["dateOfBirth"] : "";
-        $ap_contact = $conn->real_escape_string(trim($_POST["contact"]));
-        $ap_email = $conn->real_escape_string(trim($_POST["email"]));
+        $ap_contact = trim($_POST["contact"]);
+        $ap_email = trim($_POST["email"]);
         $ap_dateAndTime = $_POST["dateAndTime"];
         $ap_location = isset($_POST["location"]) ? $_POST["location"] : "";
         $ap_reason = isset($_POST["reason"]) ? $_POST["reason"] : "";
+        $ap_uid = isset($_SESSION["uid"]) ? $_SESSION["uid"] : "";
 
         if (!empty($ap_name) && !empty($ap_gender) && !empty($ap_birthdate) && !empty($ap_contact) && !empty($ap_email) && !empty($ap_dateAndTime) && !empty($ap_location) && !empty($ap_reason)) {
             $statement = $conn->prepare("INSERT INTO appointments (name, birthdate, gender, email, contact, date, reason, location, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
-            $statement->bind_param("ssssssssi", $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $_SESSION["uid"]);
+            $statement->bind_param("sssssssss", $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $ap_uid);
             $statement->execute();
             $statement->close();
         } else {
@@ -61,7 +63,7 @@
             <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
-                if (!count($_SESSION)) {
+                if (!isset($_SESSION["uid"])) {
                  echo "<li><a class=\"button\" href=\"/passport_appointment_management/login\">Login / Sign Up</a></li>";
                 } else {
                     echo "<li><a class=\"bi bi-person-fill\" href=\"/passport_appointment_management/profile\"></a></li>";

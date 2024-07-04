@@ -1,7 +1,7 @@
 * {
   margin: 0;
   padding: 0;
-  border-box: box-sizing;
+  box-sizing: border-box;
   font-family: "Roboto";
   font-weight: 400;
 }
@@ -87,7 +87,7 @@ a.bi {
 }
 
 .bi {
-  font-size: 2rem;
+  font-size: 2rem !important;
   transition: ease-in 0.2s;
 }
 
