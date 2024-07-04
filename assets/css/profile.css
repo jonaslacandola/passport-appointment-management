@@ -65,7 +65,7 @@ table {
 
 .tb-head {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 5rem;
   align-items: center;
   gap: 2rem;
   padding: 1rem 1.5rem;
@@ -76,7 +76,7 @@ table {
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 0.5fr;
+  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 5rem;
   align-items: center;
   gap: 2rem;
   padding: 1rem 1.5rem;
@@ -87,10 +87,12 @@ table {
 
 .row:nth-child(odd) {
   /* background-color: var(--secondary-white); */
+  border-bottom: 1px solid var(--secondary-light-gray);
 }
 
 .row:nth-child(even) {
   /* background-color: var(--primary-deep-blue); */
+  border-bottom: 1px solid var(--secondary-light-gray);
 }
 
 tr:first-child {
