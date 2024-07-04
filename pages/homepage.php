@@ -1,6 +1,5 @@
 <?php
     session_start();
-    // session_unset();
 ?>
 
 <!DOCTYPE html>
@@ -48,7 +47,7 @@
                 <div id="text-container">
                     <h1>Schedule Your Passport Appointment</h1>
                     <p>Our easy-to-use system allows you to book your passport appointment quickly and efficiently.</p>
-                    <a href="/passport_appointment_management/login" class="button">Get Started</a>
+                    <a href="/passport_appointment_management/register" class="button">Get Started</a>
                 </div>
                 <div id="others"></div>
             </div>
@@ -75,7 +74,22 @@
         <div id="aboutus">
             <h1>About Us</h1>
             <div id="aboutus-container">
-
+                <p class="welcome-to-philport">
+                    Welcome to PhilPort, your trusted partner in securing your passport appointments with ease and efficiency.
+                    Our mission is to simplify the passport application process, providing you with a seamless and stress-free
+                    experience.
+                    <br /><br />
+                    We understand that obtaining a passport is a crucial step in your journey, whether
+                    it’s for travel, work, or study abroad. Our platform is designed to streamline the appointment booking
+                    process, offering you a user-friendly interface, real-time availability updates, and comprehensive support
+                    every step of the way.
+                    <br /><br />
+                    Our team is dedicated to ensuring you have all the information you need,
+                    from application guidelines to appointment booking tips. We strive to make the process as straightforward as
+                    possible, saving you time and reducing the hassle often associated with passport services.
+                    <br /><br />
+                    Thank you for choosing PhilPort. Safe travels and best wishes on your journey!
+                </p>
             </div>
         </div>
 

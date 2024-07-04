@@ -65,7 +65,7 @@ table {
 
 .tb-head {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 0.5fr;
   align-items: center;
   gap: 2rem;
   padding: 1rem 1.5rem;
@@ -76,7 +76,7 @@ table {
 
 .row {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 0.8fr 1fr 1fr 0.5fr;
   align-items: center;
   gap: 2rem;
   padding: 1rem 1.5rem;
@@ -118,4 +118,12 @@ tr:last-child {
   gap: 1rem;
 
   margin: auto;
+}
+
+.pending {
+  color: var(--accent-coral);
+}
+
+.completed {
+  color: var(--primary-light-blue);
 }

@@ -3,6 +3,8 @@
 
     include "config.php";
 
+    unset($_SESSION["login-errors"]);
+
     if (isset($_SESSION["uid"])) {
         header("Location: appointment");
         exit();

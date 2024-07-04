@@ -3,17 +3,33 @@
 
     include "config.php";
 
+    unset($_SESSION["ap-pending"]);
+
+    $errors = [];
     $id = generateId();
 
-    $statement = $conn->prepare("SELECT * FROM users WHERE uid = ? OR name = ?");
+    $statement = $conn->prepare("SELECT name, email, contact FROM users WHERE uid = ? OR name = ?");
     $statement->bind_param("ss", $_SESSION["uid"], $_SESSION["name"]);
     $statement->execute();
     $statement->store_result();
-    $statement->bind_result($uid, $name, $email, $password, $contact);
+    $statement->bind_result($name, $email, $contact);
     $statement->fetch();
+
+    if (isset($_SESSION["uid"])) {
+        $statement = $conn->prepare("SELECT * FROM appointments WHERE uid = ?  AND status = 'Pending'");
+        $statement->bind_param("s", $_SESSION["uid"]);
+        $statement->execute();
+        $statement->store_result();
+
+        if ($statement->num_rows()) {
+            $_SESSION["ap-pending"] = "You have a pending appointment. Please complete it before making a new one.";
+        }
+    }
+
     $statement->close();
 
-    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {        
+
         $ap_name = trim($_POST["name"]);
         $ap_gender = isset($_POST["gender"]) ? $_POST["gender"] : "";
         $ap_birthdate = isset($_POST["dateOfBirth"]) ? $_POST["dateOfBirth"] : "";
@@ -23,14 +39,34 @@
         $ap_location = isset($_POST["location"]) ? $_POST["location"] : "";
         $ap_reason = isset($_POST["reason"]) ? $_POST["reason"] : "";
         $ap_uid = isset($_SESSION["uid"]) ? $_SESSION["uid"] : "";
+        $status = "Pending";
 
         if (!empty($ap_name) && !empty($ap_gender) && !empty($ap_birthdate) && !empty($ap_contact) && !empty($ap_email) && !empty($ap_dateAndTime) && !empty($ap_location) && !empty($ap_reason)) {
-            $statement = $conn->prepare("INSERT INTO appointments (id, name, birthdate, gender, email, contact, date, reason, location, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
-            $statement->bind_param("ssssssssss", $id, $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $ap_uid);
+            if (!filter_var($ap_email, FILTER_VALIDATE_EMAIL)) {
+                array_push($errors, "Enter a valid email");
+            }
+
+            if (!preg_match('/^\d{11}$/', $ap_contact)) {
+                array_push($errors, "Enter a valid phone number");
+            }
+
+            if (!empty($errors)) {
+                $_SESSION["ap-errors"] = $errors;
+                header("Location: appointment");
+                exit();
+            }
+
+            $statement = $conn->prepare("INSERT INTO appointments (id, name, birthdate, gender, email, contact, date, reason, location, uid, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
+            $statement->bind_param("sssssssssss", $id, $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $ap_uid, $status);
+
+            unset($_SESSION["ap-errors"]);
             $statement->execute();
             $statement->close();
         } else {
-            //Fill out all fields
+            array_push($errors, "Please answer all fields");
+            $_SESSION["ap-errors"] = $errors;
+            header("Location: appointment");
+            exit();
         }
         $conn->close();
     }
@@ -73,14 +109,16 @@
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
                 if (!isset($_SESSION["uid"])) {
-                 echo "<li><a class=\"button\" href=\"/passport_appointment_management/login\">Login / Sign Up</a></li>";
+                    echo "<li><a class=\"button\" href=\"/passport_appointment_management/login\">Login / Sign Up</a></li>";
                 } else {
                     echo "<li><a class=\"bi bi-person-fill\" href=\"/passport_appointment_management/profile\"></a></li>";
                 }
-            ?>
+                ?>
         </ul>
     </nav>
-    
+    <?php if (isset($_SESSION["ap-pending"])): ?>
+        <p class="warning"><?= $_SESSION["ap-pending"] ?></p>
+    <?php endif ?>
     <main>
         <section id="appointment">
             <form id="appointment-form" method="post">
@@ -119,7 +157,14 @@
             </form>
             <div>
                 <div id="calendar"></div>
-                <p>Select your appointment date above.</p>
+                <div id="logs">
+                    <p>Select your appointment date above.</p>
+                    <?php if (!empty($_SESSION["ap-errors"])) : ?>
+                        <?php foreach($_SESSION["ap-errors"] as $error): ?>
+                            <p class="error"><?= htmlspecialchars($error) ?></p>
+                            <?php endforeach ?>
+                            <?php endif ?>
+                </div>
             </div>
             
         </section>
@@ -139,7 +184,7 @@
                     <span id="sum-place"></span>
                 </p>
             </div>
-            <button id="submit" class="button">Schedule</button>
+            <button id="submit" class="button" <?= !empty($_SESSION["ap-pending"]) ? "disabled" : "" ?>>Schedule</button>
         </section>
     </main>
 

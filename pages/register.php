@@ -3,6 +3,8 @@
 
     include "config.php";
 
+    unset($_SESSION["regiser-errors"]);
+
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $errors = [];
 

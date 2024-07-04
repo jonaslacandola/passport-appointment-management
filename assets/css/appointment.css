@@ -15,7 +15,6 @@ main {
   gap: 1rem;
 
   overflow-y: scroll;
-
   margin: auto;
 }
 
@@ -95,6 +94,13 @@ select {
   justify-self: end;
 }
 
+#submit:disabled {
+  cursor: not-allowed;
+  background-color: var(--secondary-light-gray);
+  box-shadow: none;
+  color: var(--secondary-soft-gray);
+}
+
 #summary #sum-main {
   display: flex;
   flex-direction: column;
@@ -115,4 +121,21 @@ select {
 
 .hl {
   font-weight: 500;
+}
+
+#logs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.error {
+  color: var(--accent-coral);
+}
+
+.warning {
+  background-color: var(--accent-coral);
+  color: var(--secondary-soft-gray);
+  padding: 1rem 1.5rem;
 }

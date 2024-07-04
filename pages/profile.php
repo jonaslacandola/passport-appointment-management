@@ -80,6 +80,7 @@
                         <th>DATE</th>
                         <th>REASON FOR APPOINTMENT</th>
                         <th>LOCATION</th>
+                        <th>STATUS</th>
                     </tr>
                     <?php if (isset($appointments)) : ?>
                         <?php foreach($appointments as $appointment) : ?>
@@ -89,6 +90,7 @@
                                 <td><?= htmlspecialchars($appointment["date"]) ?></td>
                                 <td><?= htmlspecialchars($appointment["reason"]) ?></td>
                                 <td><?= htmlspecialchars($appointment["location"]) ?></td>
+                                <td class="<?= htmlspecialchars(strtolower($appointment["status"])) ?>"><?= htmlspecialchars($appointment["status"]) ?></td>
                             </tr>
                         <?php endforeach ?>
                     <?php endif; ?>
