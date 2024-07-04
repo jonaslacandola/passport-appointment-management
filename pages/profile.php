@@ -49,7 +49,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
+            <li><a href="/passport_appointment_management/view-appointment">View Appointment</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
                 if (!isset($_SESSION["uid"])) {
@@ -68,10 +68,34 @@
                 <p><?= htmlspecialchars($db_email) ?></p>
                 <p><?= htmlspecialchars($db_contact)?></p>
             </div>
-            <a href="logout.php">Log Out</a>
+            <a href="logout.php" class="logout-btn button">Log Out</a>
         </div>
-        <div>
+        <div id="dashboard">
             <h2>Dashboard</h2>
+            <div id="table-container">
+                <table>
+                    <tr class="tb-head">
+                        <th>ID</th>
+                        <th>NAME</th>
+                        <th>DATE</th>
+                        <th>REASON FOR APPOINTMENT</th>
+                        <th>LOCATION</th>
+                    </tr>
+                    <?php if (isset($appointments)) : ?>
+                        <?php foreach($appointments as $appointment) : ?>
+                            <tr class="row">
+                                <td><?= htmlspecialchars($appointment["id"]) ?></td>
+                                <td><?= htmlspecialchars($appointment["name"]) ?></td>
+                                <td><?= htmlspecialchars($appointment["date"]) ?></td>
+                                <td><?= htmlspecialchars($appointment["reason"]) ?></td>
+                                <td><?= htmlspecialchars($appointment["location"]) ?></td>
+                            </tr>
+                        <?php endforeach ?>
+                    <?php endif; ?>
+                    <tr class="row">
+                    </tr>
+                </table>
+            </div>
         </div>
     </main>
 </body>

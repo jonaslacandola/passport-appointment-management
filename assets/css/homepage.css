@@ -1,9 +1,9 @@
 body {
   display: grid;
-  grid-template-rows: 7.5rem 1fr;
+  grid-template-rows: 6rem 1fr;
   height: 100vh;
   width: 100%;
-  color: var(--secondary-white);
+  color: var(--secondary-white) !important;
 }
 
 main {
@@ -129,6 +129,28 @@ main #features {
 
 .feature-icon p {
   font-size: 18px;
+}
+
+main #aboutus {
+  width: 85%;
+  height: 70%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  margin: auto;
+}
+
+#aboutus h1,
+#aboutus p {
+  color: var(--secondary-dark-gray) !important;
+}
+
+#aboutus h1 {
+  font-size: 2.5rem;
+  font-weight: 500;
 }
 
 footer {

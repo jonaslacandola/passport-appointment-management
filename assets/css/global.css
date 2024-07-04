@@ -8,6 +8,7 @@
 
 body {
   background-color: var(--secondary-soft-gray);
+  color: var(--secondary-dark-gray);
 }
 
 h1,
@@ -26,14 +27,14 @@ a {
 }
 
 nav {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
 
   /* position: sticky;
   top: 0; */
 
-  padding: 0 10rem;
+  padding: 0 4rem;
   background-color: var(--primary-deep-blue);
 }
 

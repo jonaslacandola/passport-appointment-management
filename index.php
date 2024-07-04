@@ -8,8 +8,8 @@
         case "appointment":
             include "pages/appointment.php";
             break;
-        case "faq":
-            include "pages/faq.php";
+        case "view-appointment":
+            include "pages/view.php";
             break;
         case "contact-us":
             include "pages/contact-us.php";

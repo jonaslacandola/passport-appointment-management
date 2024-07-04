@@ -3,6 +3,8 @@
 
     include "config.php";
 
+    $id = generateId();
+
     $statement = $conn->prepare("SELECT * FROM users WHERE uid = ? OR name = ?");
     $statement->bind_param("ss", $_SESSION["uid"], $_SESSION["name"]);
     $statement->execute();
@@ -23,14 +25,21 @@
         $ap_uid = isset($_SESSION["uid"]) ? $_SESSION["uid"] : "";
 
         if (!empty($ap_name) && !empty($ap_gender) && !empty($ap_birthdate) && !empty($ap_contact) && !empty($ap_email) && !empty($ap_dateAndTime) && !empty($ap_location) && !empty($ap_reason)) {
-            $statement = $conn->prepare("INSERT INTO appointments (name, birthdate, gender, email, contact, date, reason, location, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
-            $statement->bind_param("sssssssss", $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $ap_uid);
+            $statement = $conn->prepare("INSERT INTO appointments (id, name, birthdate, gender, email, contact, date, reason, location, uid) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)") ;
+            $statement->bind_param("ssssssssss", $id, $ap_name, $ap_birthdate, $ap_gender, $ap_email, $ap_contact, $ap_dateAndTime, $ap_reason, $ap_location, $ap_uid);
             $statement->execute();
             $statement->close();
         } else {
             //Fill out all fields
         }
         $conn->close();
+    }
+
+    function generateId() {
+        $timestamp = time();
+        $randomStr = substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, 5);
+
+        return $timestamp.$randomStr;
     }
 ?>
 
@@ -60,7 +69,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
+            <li><a href="/passport_appointment_management/view-appointment">View Appointment</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
                 if (!isset($_SESSION["uid"])) {
@@ -118,11 +127,12 @@
             <iframe id="gmap_canvas" src="https://maps.google.com/maps?q=&t=&z=15&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
             <div id="sum-main"> 
                 <p class="title">Summary</p>
-                <p id="sum-name"><?php echo $name ? $name : "" ?></p>
+                <p id="sum-id" class="hl">ID: <?= htmlspecialchars($id) ?></p>
+                <p id="sum-name"><?= $name ? htmlspecialchars($name) : "" ?></p>
                 <p id="sum-birthdate"></p> 
                 <p id="sum-gender"></p>
                 <br>
-                <p>Appointment:</p>
+                <p class="hl">Appointment:</p>
                 <p id="sum-reason"></p>
                 <p>
                     <span id="sum-time"></span>

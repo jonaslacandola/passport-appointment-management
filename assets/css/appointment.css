@@ -3,7 +3,7 @@ body {
   width: 100%;
 
   display: grid;
-  grid-template-rows: 7.5rem 1fr;
+  grid-template-rows: 6rem 1fr;
 }
 
 main {
@@ -111,4 +111,8 @@ select {
   height: 100%;
   border-radius: 8px 8px 0 0;
   /* border: 1px solid var(--primary-light-blue); */
+}
+
+.hl {
+  font-weight: 500;
 }

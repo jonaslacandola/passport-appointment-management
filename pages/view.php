@@ -16,10 +16,10 @@
         <?php
             include "assets/css/colors.css";
             include "assets/css/global.css";
-            include "assets/css/faq.css";
+            include "assets/css/view.css";
         ?>
     </style>
-    <title>PhilPort | FAQ's</title>
+    <title>PhilPort | View appointment</title>
 </head>
 <body>
     <nav>
@@ -27,7 +27,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
+            <li><a href="/passport_appointment_management/view-appointment">View Appointment</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
                 if (!isset($_SESSION["uid"])) {

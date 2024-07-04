@@ -28,7 +28,7 @@
         <ul>
             <li><a href="/passport_appointment_management/">Home</a></li>
             <li><a href="/passport_appointment_management/appointment">Schedule Appointment</a></li>
-            <li><a href="/passport_appointment_management/faq">FAQ's</a></li>
+            <li><a href="/passport_appointment_management/view-appointment">View Appointment</a></li>
             <li><a href="/passport_appointment_management/contact-us">Contact Us</a></li>
             <?php
                 if (!isset($_SESSION["uid"])) {
@@ -69,6 +69,13 @@
                     <img src="assets/images/help.svg" alt="Illustration of easy scheduling">
                     <p>Customer Support</p>
                 </div>
+            </div>
+        </div>
+
+        <div id="aboutus">
+            <h1>About Us</h1>
+            <div id="aboutus-container">
+
             </div>
         </div>
 
