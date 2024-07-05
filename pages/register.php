@@ -37,7 +37,7 @@
                 $uid = bin2hex(random_bytes(16));
 
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
+                
                 $statement = $conn->prepare("INSERT INTO users (uid, name, password, email, contact) VALUES (? ,?, ?, ?, ?)");
                 $statement->bind_param("sssss", $uid, $name, $hashedPassword, $email, $contact);
                 
@@ -56,7 +56,7 @@
                     exit();
                 }   
             } else {
-                array_push($errors, "This email already exists");
+                array_push($errors, "This user already exists");
                 $_SESSION["register-errors"] = $errors;
                 header("Location: register");
                 exit();

@@ -39,7 +39,16 @@
         </ul>
     </nav>
     <main>
-        
+        <form>
+            <h1>Send us a message</h1>
+            <p>We’re here to help you with your passport-related queries.</p>
+            <input type="text" name="" id="" placeholder="Full Name" class="input">
+            <input type="text" name="" id="" placeholder="Email" class="input">
+            <input type="text" name="" id="" placeholder="Contact Number" class="input">
+            <input type="text" name="" id="" placeholder="Subject" class="input">
+            <textarea name="message" id="" placeholder="Write us a message" class="input"></textarea>
+            <button class="button"><span>Send Message</span></button>
+        </form>
     </main>
 </body>
 </html>

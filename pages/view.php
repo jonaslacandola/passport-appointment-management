@@ -4,9 +4,8 @@
     include "config.php";
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
         if (empty($_POST["search"])) {
-            $_SESSION["view-warning"] = "Please enter a valid id";
+            $_SESSION["view-warning"] = "Please enter an id";
             header("Location: view-appointment");
             exit();
         }
@@ -26,6 +25,7 @@
 
         $statement->bind_result( $date, $name, $birthdate, $gender, $email, $contact, $reason, $location, $status);
         $statement->fetch();
+        unset($_SESSION["view-warning"]);
 
         $convertDate = new DateTime($date);
         $day = $convertDate->format("d");

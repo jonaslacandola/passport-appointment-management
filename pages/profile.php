@@ -4,7 +4,7 @@
     include "config.php";
 
     if (!isset($_SESSION["uid"])) {
-        header("Location: /passport_appointment_management/");
+        header("Location: login");
         exit();
     }
 
