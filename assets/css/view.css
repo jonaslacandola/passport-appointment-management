@@ -3,5 +3,144 @@ body {
   width: 100%;
 
   display: grid;
-  grid-template-rows: 6rem 1fr;
+  grid-template-rows: 6rem 4rem 1fr;
+}
+
+main {
+  height: 100%;
+  width: 85%;
+
+  display: grid;
+  grid-template-rows: 0.2fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+
+  overflow-y: scroll;
+  margin: auto;
+}
+
+form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.searchbar {
+  width: 50%;
+  background-color: var(--secondary-white);
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 2rem;
+  border-radius: 8px;
+  gap: 1rem;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.05) 0px 4px 6px -2px;
+}
+
+.searchbar i {
+  font-size: 1.5rem !important;
+}
+
+.searchbar input {
+  width: 100%;
+  padding: 1rem 0;
+  border: none;
+  background-color: transparent;
+  font-size: 1rem;
+  outline: none;
+}
+
+.searchbar button {
+  font-size: 1rem;
+  padding: 1rem 2rem;
+  border: none;
+  border-radius: 6px;
+  background-color: var(--primary-medium-blue);
+  color: var(--secondary-white);
+}
+
+.searchbar input::placeholder {
+  font-size: 1rem;
+}
+
+.appointment-container {
+  height: 60%;
+  align-self: center;
+  background-color: var(--secondary-white);
+  border-radius: 8px;
+
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 20px 25px -5px,
+    rgba(0, 0, 0, 0.04) 0px 10px 10px -5px;
+
+  display: grid;
+  grid-template-columns: 10rem 1fr;
+}
+
+.appointment-container div {
+}
+
+.title {
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
+.infos {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  padding: 2rem;
+}
+
+.date {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--primary-deep-blue);
+  border-radius: 8px 0 0 8px;
+}
+
+.date #month,
+.date #weekday {
+  font-size: 1.5rem;
+  color: var(--secondary-white);
+}
+
+.date #day {
+  font-weight: 600;
+  font-size: 4rem;
+  color: var(--primary-light-blue);
+}
+
+#ap-info {
+  border-bottom: 2px solid var(--secondary-soft-gray);
+}
+
+#ap-info,
+#user-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.data p:first-child {
+  color: var(--secondary-light-gray);
+}
+
+.data p:last-child {
+  font-size: 18px;
+}
+
+.pending {
+  color: var(--accent-coral);
+}
+
+.completed {
+  color: var(--primary-light-blue);
+}
+
+.warning {
+  background-color: var(--accent-coral);
+  color: var(--secondary-soft-gray);
+  padding: 1rem 1.5rem;
 }

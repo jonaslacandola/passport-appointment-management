@@ -1,5 +1,39 @@
 <?php
     session_start();
+
+    include "config.php";
+
+    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+
+        if (empty($_POST["search"])) {
+            $_SESSION["view-warning"] = "Please enter a valid id";
+            header("Location: view-appointment");
+            exit();
+        }
+
+        $ap_id = $_POST["search"];
+
+        $statement = $conn->prepare("SELECT date, name, birthdate, gender, email, contact, reason, location, status FROM appointments WHERE id = ?");
+        $statement->bind_param("s", $ap_id);
+        $statement->execute();
+        $statement->store_result();
+        
+        if (!$statement->num_rows()) {
+            $_SESSION["view-warning"] = "The id do not match to any appointments";
+            header("Location: view-appointment");
+            exit();
+        }
+
+        $statement->bind_result( $date, $name, $birthdate, $gender, $email, $contact, $reason, $location, $status);
+        $statement->fetch();
+
+        $convertDate = new DateTime($date);
+        $day = $convertDate->format("d");
+        $month = $convertDate->format("F");
+        $weekday = $convertDate->format("l");
+
+        $statement->close();   
+    }
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +72,62 @@
             ?>
         </ul>
     </nav>
-    
-    <main></main>
+    <div>
+        <?= isset($_SESSION["view-warning"]) ? "<p class=\"warning\">" . htmlspecialchars($_SESSION["view-warning"])  . "</p>" : "" ?>
+    </div>
+    <main>
+        <form method="post">
+            <div class="searchbar">
+                <i class="bi bi-search"></i>
+                <input type="text" class="input" id="search" name="search" placeholder="Enter appointment id">
+                <button class="button">View</button>
+            </div>
+        </form>
+        <section class="appointment-container">
+            <div class="date">
+                <p id="month"><?= !empty($month) ? $month : "June" ?></p>
+                <p id="day"><?= !empty($day) ? $day : 15 ?></p>
+                <p id="weekday"><?= !empty($weekday) ? $weekday : "Saturday" ?></p>
+            </div>
+            <div class="infos">
+                <div id="ap-info">
+                    <div class="data">
+                        <p>Appointment ID</p>
+                        <p><?= !empty($ap_id) ? htmlspecialchars($ap_id) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Appointment Status</p>
+                        <p class="<?= !empty($status) ? htmlspecialchars(strtolower($status)) : "" ?>"><?= !empty($status) ? htmlspecialchars($status) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Reason for Appointment</p>
+                        <p><?= !empty($reason) ? htmlspecialchars($reason) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Location</p>
+                        <p><?= !empty($location) ? htmlspecialchars($location) : "-----" ?></p>
+                    </div>
+                </div>
+                <div id="user-info">
+                    <div class="data">
+                        <p>Name</p>
+                        <p><?= !empty($name) ? htmlspecialchars($name) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Gender</p>
+                        <p><?= !empty($gender) ? htmlspecialchars($gender) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Date of Birth</p>
+                        <p><?= !empty($birthdate) ? htmlspecialchars($birthdate) : "-----" ?></p>
+                    </div>
+                    <div class="data">
+                        <p>Contact Details</p>
+                        <p><span><?= !empty($email) ? htmlspecialchars($email) : "-----" ?></span> / <span><?= !empty($contact) ? htmlspecialchars($contact) : "-----" ?></span></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>

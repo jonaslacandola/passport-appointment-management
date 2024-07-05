@@ -11,12 +11,13 @@
     $statement = $conn->prepare("SELECT name, email, contact FROM users WHERE uid = ? OR name = ?");
     $statement->bind_param("ss", $_SESSION["uid"], $_SESSION["name"]);
     $statement->execute();
+
     $statement->store_result();
     $statement->bind_result($name, $email, $contact);
     $statement->fetch();
 
     if (isset($_SESSION["uid"])) {
-        $statement = $conn->prepare("SELECT * FROM appointments WHERE uid = ?  AND status = 'Pending'");
+        $statement = $conn->prepare("SELECT * FROM appointments WHERE uid = ? AND status = 'Pending'");
         $statement->bind_param("s", $_SESSION["uid"]);
         $statement->execute();
         $statement->store_result();
@@ -29,7 +30,6 @@
     $statement->close();
 
     if ($_SERVER["REQUEST_METHOD"] === "POST") {        
-
         $ap_name = trim($_POST["name"]);
         $ap_gender = isset($_POST["gender"]) ? $_POST["gender"] : "";
         $ap_birthdate = isset($_POST["dateOfBirth"]) ? $_POST["dateOfBirth"] : "";

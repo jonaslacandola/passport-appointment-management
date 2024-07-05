@@ -138,4 +138,5 @@ select {
   background-color: var(--accent-coral);
   color: var(--secondary-soft-gray);
   padding: 1rem 1.5rem;
+  height: 4rem;
 }
